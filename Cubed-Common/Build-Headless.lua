@@ -1,7 +1,7 @@
-project "WalnutApp"
-   kind "ConsoleApp"
+project "Cubed-Common-Headless"
+   kind "StaticLib"
    language "C++"
-   cppdialect "C++17"
+   cppdialect "C++20"
    targetdir "bin/%{cfg.buildcfg}"
    staticruntime "off"
 
@@ -9,18 +9,20 @@ project "WalnutApp"
 
    includedirs
    {
-      "../Walnut/vendor/imgui",
-      "../Walnut/vendor/glfw/include",
       "../Walnut/vendor/glm",
 
-      "../Walnut/Walnut/src",
+      "../Walnut/Walnut/Source",
+      "../Walnut-Networking/Source",
 
-      "%{IncludeDir.VulkanSDK}",
+      "../Walnut/vendor/spdlog/include",
+
+      "../Walnut-Networking/vendor/GameNetworkingSockets/include"
    }
 
    links
    {
-       "Walnut"
+       "Walnut-Headless",
+       "Walnut-Networking",
    }
 
    targetdir ("../bin/" .. outputdir .. "/%{prj.name}")
@@ -42,7 +44,6 @@ project "WalnutApp"
       symbols "On"
 
    filter "configurations:Dist"
-      kind "WindowedApp"
       defines { "WL_DIST" }
       runtime "Release"
       optimize "On"
